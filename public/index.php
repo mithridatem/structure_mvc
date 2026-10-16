@@ -20,7 +20,6 @@ use App\Controller\UserController;
 $homeController = new HomeController();
 $userController = new UserController();
 
-
 //test des valeurs du path
 switch ($path) {
     case '/':
