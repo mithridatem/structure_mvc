@@ -9,8 +9,8 @@ $path = isset($url["path"]) ? $url["path"] : "/";
 
 
 //importer les variables d'environnement 
-/* $dotenv = Dotenv\Dotenv::createImmutable('../');
-$dotenv->load(); */
+$dotenv = Dotenv\Dotenv::createImmutable('../');
+$dotenv->load();
 
 //importer
 use App\Controller\HomeController;
