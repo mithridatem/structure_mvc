@@ -59,4 +59,38 @@ class UserService
         //Message de confirmation
         return "Le compte " . $_POST["email"] . " a été ajouté en BDD";
     }
+
+    public function connection(): string 
+    {
+
+        //tester si les champs sont remplis
+        if (
+            empty($_POST["email"]) ||
+            empty($_POST["password"])
+        ) {
+            return "Veuillez remplir tous les champs";
+        }
+        //nettoyer les données
+        Tools::sanitizeArray($_POST);
+        
+        //Récupération du compte
+        $user =  $this->userRepository->findByEmail($_POST["email"]);
+        
+        //vérifier si le compte n'existe pas
+        if ($user == null) {
+            return "Les informations de connexion sont incorrecte";
+        }
+        
+        //vérifier si le mot de passe n'est compatible
+        if (!password_verify($_POST["password"], $user->getPassword())) {
+            return "Les informations de connexion sont incorrecte";
+        }
+
+        //créer les super globale de session
+        /* $_SESSION["firstname"] = $user->getFirstname();
+        $_SESSION["lastname"] = $user->getLastname(); */
+
+        //Message de confirmation
+        return "User connecté";
+    }
 }

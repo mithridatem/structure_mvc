@@ -27,6 +27,14 @@ class UserController
         return $this->render('register', 'Inscription', $data ?? []);
     }
 
+    public function login(): mixed
+    {
+        if (isset($_POST["submit"])) {
+            $data["msg"] = $this->userService->connection();
+        }
+        return $this->render('login', 'Connexion', $data ?? []);
+    }
+
     private function render(string $template, ?string $title, array $data = []): mixed
     {
         return include __DIR__ . "/../../template/template_" . $template . ".php";

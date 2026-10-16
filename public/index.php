@@ -7,6 +7,11 @@ $url = parse_url($_SERVER["REQUEST_URI"]);
 //extraction du path
 $path = isset($url["path"]) ? $url["path"] : "/";
 
+
+//importer les variables d'environnement 
+/* $dotenv = Dotenv\Dotenv::createImmutable('../');
+$dotenv->load(); */
+
 //importer
 use App\Controller\HomeController;
 use App\Controller\UserController;
@@ -15,9 +20,6 @@ use App\Controller\UserController;
 $homeController = new HomeController();
 $userController = new UserController();
 
-//importer les variables d'environnement 
-$dotenv = Dotenv\Dotenv::createImmutable('../');
-$dotenv->load();
 
 //test des valeurs du path
 switch ($path) {
@@ -31,7 +33,7 @@ switch ($path) {
         echo "Profil user";
         break;
     case '/login':
-        echo  "Se connecter";
+        $userController->login();
         break;
     default:
         echo "Erreur 404";
