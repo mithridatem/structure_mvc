@@ -1,12 +1,13 @@
 <?php
 include '../vendor/autoload.php';
 
+session_start();
+
 //récupération de l'URL (composante)
 $url = parse_url($_SERVER["REQUEST_URI"]);
 
 //extraction du path
 $path = isset($url["path"]) ? $url["path"] : "/";
-
 
 //importer les variables d'environnement 
 $dotenv = Dotenv\Dotenv::createImmutable('../');
@@ -28,8 +29,8 @@ switch ($path) {
     case '/register':
         $userController->register();
         break;
-    case '/profil':
-        echo "Profil user";
+    case '/conditions':
+        $homeController->conditionGenerale();
         break;
     case '/login':
         $userController->login();

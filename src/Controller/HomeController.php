@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
-class HomeController
+use App\Controller\AbstractController;
+
+class HomeController extends AbstractController
 {
     /**
      * Méthode pour afficher la page Accueil
@@ -12,15 +14,8 @@ class HomeController
         return $this->render('home', 'Accueil');
     }
 
-    /**
-     * Méthode pour rendre une vue avec un template
-     * @param string $template Le nom du template à inclure
-     * @param string|null $title Le titre de la page
-     * @param array $data Les données à passer au template
-     * @return mixed
-     */
-    private function render(string $template, ?string $title, array $data = []): mixed
+    public function conditionGenerale(): mixed
     {
-        return include __DIR__ . "/../../template/template_" . $template . ".php";
+        return $this->render('condition_generale', 'Conditions Générales');
     }
 }

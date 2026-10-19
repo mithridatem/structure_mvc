@@ -28,12 +28,18 @@ class UserService
         ) {
             return "Veuillez remplir tous les champs";
         }
+
         //nettoyer les données
         Tools::sanitizeArray($_POST);
         
         //vérifier si les 2 mots de passe sont identiques
         if ($_POST["password"] != $_POST["confirm-password"]) {
             return "Les 2 mots de passe ne sont pas identiques";
+        }
+
+        //test si le mot de passe est trop court
+        if(strlen($_POST["password"]) < 8 ) {
+            return "Le mot de passe doit avoir au moins 8 caractéres";
         }
 
         //Récupération du compte
@@ -54,7 +60,7 @@ class UserService
         $newUser->setPassword($hash);
         
         //ajouter en BDD le compte User
-        $userBDD = $this->userRepository->create($newUser);
+        $this->userRepository->create($newUser);
         
         //Message de confirmation
         return "Le compte " . $_POST["email"] . " a été ajouté en BDD";
@@ -70,6 +76,7 @@ class UserService
         ) {
             return "Veuillez remplir tous les champs";
         }
+
         //nettoyer les données
         Tools::sanitizeArray($_POST);
         
@@ -87,8 +94,10 @@ class UserService
         }
 
         //créer les super globale de session
-        /* $_SESSION["firstname"] = $user->getFirstname();
-        $_SESSION["lastname"] = $user->getLastname(); */
+        $_SESSION["firstname"] = $user->getFirstname();
+        $_SESSION["lastname"] = $user->getLastname();
+        $_SESSION["id"] = $user->getId();
+        $_SESSION["connected"] = true;
 
         //Message de confirmation
         return "User connecté";

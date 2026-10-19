@@ -4,8 +4,9 @@ namespace App\Controller;
 
 //Import des dépendances
 use App\Service\UserService;
+use App\Controller\AbstractController;
 
-class UserController
+class UserController extends AbstractController
 {
     private UserService $userService;
 
@@ -27,16 +28,16 @@ class UserController
         return $this->render('register', 'Inscription', $data ?? []);
     }
 
+    //Méthode pour se connecter
     public function login(): mixed
     {
+        //Test si le formulaire est soumis
         if (isset($_POST["submit"])) {
+            //Appel de la la logique de connexion
             $data["msg"] = $this->userService->connection();
         }
-        return $this->render('login', 'Connexion', $data ?? []);
-    }
 
-    private function render(string $template, ?string $title, array $data = []): mixed
-    {
-        return include __DIR__ . "/../../template/template_" . $template . ".php";
+        //Affichage du template
+        return $this->render('login', 'Connexion', $data ?? []);
     }
 }
